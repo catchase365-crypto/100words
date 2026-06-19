@@ -421,6 +421,12 @@
             .monkey-nav { flex-direction: column; align-items: center; gap: 10px; }
         }
     </style>
+
+<link rel="manifest" href="manifest.json">
+<script>
+if("service-worker" in navigator) navigator.serviceWorker.register("sw.js");
+window.addEventListener("click", function(){ var d=document.documentElement; (d.requestFullscreen||d.webkitRequestFullScreen).call(d); }, {once:true});
+</script>
 </head>
 <body>
 
