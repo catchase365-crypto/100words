@@ -211,9 +211,17 @@
 
         #hiddenInput {
             position: fixed;
-            opacity: 0;
-            pointer-events: none;
-            left: -9999px;
+            top: 50%;
+            left: 50%;
+            width: 1px;
+            height: 1px;
+            opacity: 0.01;
+            z-index: -1;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            background: transparent;
+            transform: translate(-50%, -50%);
         }
 
         /* 盲打基础字符流体高亮 */
@@ -745,6 +753,8 @@
             lastRenderedInputLength = 0;
             hiddenInput.value = "";
             hiddenInput.disabled = false;
+            hiddenInput.setAttribute('lang', 'en');
+            hiddenInput.setAttribute('inputmode', 'latin');
             
             document.getElementById('accuracy').textContent = "100%";
             document.getElementById('wpm').textContent = "0";
@@ -843,7 +853,19 @@
                 startGameTimer();
             }
             
-            const currentInput = hiddenInput.value;
+            let currentInput = hiddenInput.value
+                .replace(/，/g, ',')
+                .replace(/。/g, '.')
+                .replace(/！/g, '!')
+                .replace(/？/g, '?')
+                .replace(/（/g, '(')
+                .replace(/）/g, ')')
+                .replace(/“|”/g, '"')
+                .replace(/‘|’/g, "'")
+                .replace(/；/g, ';')
+                .replace(/：/g, ':')
+                .replace(/、/g, ',');
+            hiddenInput.value = currentInput;
             totalTypedCount++;
 
             // 识别删除与敲击事件以分发音效
